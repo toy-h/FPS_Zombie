@@ -211,8 +211,8 @@ public class EnemyFSM : MonoBehaviour
         {
             enemyState = EnemyState.Idle;
             print("상태 전환: Return -> Idle");
-
             animator.SetTrigger("Return2Idle");
+
 
         }
     }
@@ -227,7 +227,7 @@ public class EnemyFSM : MonoBehaviour
             // 특정 시간에 한번씩 공격한다.
             if(currentTime > attackDelay)
             {
-                player.GetComponent<PlayerMove>().DamageAction(attackPower);
+                //player.GetComponent<PlayerMove>().DamageAction(attackPower);
                 print("공격!");
                 currentTime = 0;
 
@@ -244,6 +244,11 @@ public class EnemyFSM : MonoBehaviour
         }
     }
 
+    public void AttackAction()
+    {
+     
+    }
+
     // 목표3: 적의 상태가 Move일 때, 플레이어와의 거리가 공격 범위 밖이면 적이 플레이어를 따라간다.
     private void Move()
     {
@@ -256,9 +261,10 @@ public class EnemyFSM : MonoBehaviour
         {
             enemyState = EnemyState.Return;
             print("상태 전환: Move -> Return");
+            animator.SetTrigger("Move2Return");
 
             transform.forward = (originPos - transform.position).normalized;
-            animator.SetTrigger("Attack2Move");
+ 
         }
         else if(distanceToPlayer > attackDistance)
         {
@@ -277,7 +283,7 @@ public class EnemyFSM : MonoBehaviour
             currentTime = attackDelay;
 
             animator.SetTrigger("Move2AttackDelay");
-            animator.SetTrigger("AttackDelay2Attack");
+            
         }
     }
 
