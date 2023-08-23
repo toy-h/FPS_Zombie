@@ -10,10 +10,14 @@ using UnityEngine;
 
 //목적3 :  Ready 상태일 때는 플레이어, 적이 움직일 수 없도록 한다. 
 //필요속성 : hp가 들어 있는 playerMove 
+
+//목적4 : 플레이어의 hp가 0 이하라면 플레이어의 애니메이션을 멈춘다. 
+//필요속성 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    Animator animator;
 
     private void Awake()
     {
@@ -44,7 +48,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(GameStart());
         //stateText.ver = new Color32()
-
+        animator = Player.GetComponentInChildren<Animator>();
         Player = GameObject.Find("Player").GetComponent<PlayerMove>();
     }
 
@@ -75,6 +79,8 @@ public class GameManager : MonoBehaviour
 
         if (Player.hp <= 0)
         {
+            //목적4 : 플레이어의 hp가 0 이하라면 플레이어의 애니메이션을 멈춘다. 
+            animator.SetFloat("MoveMotion", 0f);
             //상태 텍스트를 On으로 변경
             stateText.gameObject.SetActive(true);
 

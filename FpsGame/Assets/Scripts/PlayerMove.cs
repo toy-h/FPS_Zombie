@@ -27,6 +27,10 @@ using UnityEngine.UI;
 
 //목적6 : 플레이어가 죽으면 hitImage의 알파값을 현재 값에서 255로 만들어준다. 
 //필요 속성 : 현재시간, hitImage 종료시간 
+
+//목적8 : 플레이어의 자식 중 모델링 오브젝트에 있는 애니메이터 컴포넌트를 가져와서 블랜딩 트리를 호출하고 싶다. 
+//필요 속성 : 모델링 오브젝트의 애니메이터 
+
 public class PlayerMove : MonoBehaviour
 {
     // 필요속성: 이동속도
@@ -49,12 +53,16 @@ public class PlayerMove : MonoBehaviour
     //필요 속성 : 현재시간, hitImage 종료시간 
     float currentTime;
     public float hitImageEndTime;
+
+    //필요 속성 : 모델링 오브젝트의 애니메이터 
+    Animator animator;
     //필요속성 : hitImage 게임오브젝트 
     public GameObject hitImage;
     private void Start()
     {
         maxHp = hp;
         characterController = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
 
@@ -104,6 +112,8 @@ public class PlayerMove : MonoBehaviour
         // 2-2. 캐릭터 컨트롤러로 나를 이동시키고 싶다.
         characterController.Move(dir * speed * Time.deltaTime);
 
+        //목적8 : 플레이어의 자식 중 모델링 오브젝트에 있는 애니메이터 컴포넌트를 가져와서 블랜딩 트리를 호출하고 싶다. 
+        animator.SetFloat("MoveMotion", dir.magnitude);
 
 
     }
